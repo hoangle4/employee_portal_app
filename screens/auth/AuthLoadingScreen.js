@@ -9,7 +9,6 @@ import {
 } from "react-native";
 
 export default function AuthLoadingScreen(props) {
-  const [token, setToken] = useState("");
   useEffect(() => {
     _getToken();
   }, []);
@@ -25,7 +24,7 @@ export default function AuthLoadingScreen(props) {
   return (
     <View style={styles.container}>
       <ActivityIndicator />
-      <StatusBar barStyle="default" />
+      <StatusBar barStyle='default' />
     </View>
   );
 }

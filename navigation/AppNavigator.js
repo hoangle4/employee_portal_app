@@ -18,7 +18,6 @@ import SignInScreen from "../screens/auth/SignInScreen";
 import AuthLoadingScreen from "../screens/auth/AuthLoadingScreen";
 
 const AuthStack = createStackNavigator({ SignIn: SignInScreen });
-
 export default createAppContainer(
   createSwitchNavigator(
     {
