@@ -1,25 +1,13 @@
-import React, { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  AsyncStorage,
-  Button,
-  StatusBar,
-  StyleSheet,
-  View
-} from "react-native";
-
+import React, { useEffect, useContext } from "react";
+import { ActivityIndicator, StatusBar, StyleSheet, View } from "react-native";
+import AuthContext from "../../context/auth/AuthContext";
 export default function AuthLoadingScreen(props) {
+  const authContext = useContext(AuthContext);
   useEffect(() => {
-    _getToken();
+    authContext.loadUser();
   }, []);
 
-  const _getToken = async () => {
-    const userToken = await AsyncStorage.getItem("userToken");
-
-    // This will switch to the App screen or Auth screen and this loading
-    // screen will be unmounted and thrown away.
-    props.navigation.navigate(userToken ? "App" : "Auth");
-  };
+  props.navigation.navigate(authContext.isAuthenticated ? "App" : "Auth");
 
   return (
     <View style={styles.container}>

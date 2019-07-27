@@ -9,18 +9,12 @@ import {
   Text
 } from "react-native";
 export default function SignInScreen(props) {
-  const _signInAsync = async () => {
-    await AsyncStorage.setItem("userToken", "abc");
-    props.navigation.navigate("App");
-  };
-  const _signUpAsync = async () => {
-    await AsyncStorage.setItem("userToken", "abc");
-    props.navigation.navigate("App");
-  };
+  const { navigate } = props.navigation;
+
   return (
     <View style={styles.container}>
-      <Button title='Sign In' onPress={_signInAsync} />
-      <Button title='Sign Up' onPress={_signUpAsync} />
+      <Button title='Sign In' onPress={() => navigate("SignIn")} />
+      <Button title='Sign Up' onPress={() => navigate("SignUp")} />
     </View>
   );
 }
