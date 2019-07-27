@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import AuthContext from "../../context/auth/AuthContext";
 import {
   ActivityIndicator,
   AsyncStorage,
@@ -8,16 +9,17 @@ import {
   Button,
   Text
 } from "react-native";
-export default function SignInScreen(props) {
-  const { navigate } = props.navigation;
+const SignInScreen = ({ navigation: { navigate } }) => {
+  const authContext = useContext(AuthContext);
 
+  if (authContext.isAuthenticated) navigate("App");
   return (
     <View style={styles.container}>
       <Button title='Sign In' onPress={() => navigate("SignIn")} />
       <Button title='Sign Up' onPress={() => navigate("SignUp")} />
     </View>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -25,3 +27,4 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   }
 });
+export default SignInScreen;

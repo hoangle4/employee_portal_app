@@ -6,9 +6,11 @@ export default function AuthLoadingScreen({ navigation }) {
   useEffect(() => {
     authContext.loadUser();
   }, []);
-  if (authContext.isAuthenticated) navigation.navigate("App");
 
-  navigation.navigate("Auth");
+  setTimeout(() => {
+    if (authContext.isAuthenticated) navigation.navigate("App");
+    navigation.navigate("Auth");
+  }, 2000);
   return (
     <View style={styles.container}>
       <ActivityIndicator />

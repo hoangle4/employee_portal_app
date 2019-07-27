@@ -10,7 +10,7 @@ import {
   Text
 } from "react-native";
 import AuthContext from "../../context/auth/AuthContext";
-const Settings = () => {
+const Settings = ({ navigation: { navigate } }) => {
   const authContext = useContext(AuthContext);
   const signOutUser = async () => {
     authContext.logout();
@@ -22,7 +22,7 @@ const Settings = () => {
   const _renderItem = ({ item }) => {
     return <SectionContent>{item.value}</SectionContent>;
   };
-
+  if (!authContext.isAuthenticated) navigate("Auth");
   const sections = [
     {
       data: [

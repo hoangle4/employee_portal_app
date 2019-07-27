@@ -1,14 +1,14 @@
 import React from "react";
 import Settings from "./Settings";
 
-export default function SettingsScreen() {
+export default function SettingsScreen({ navigation }) {
   /**
    * Go ahead and delete ExpoConfigView and replace it with your content;
    * we just wanted to give you a quick view of your config.
    */
-  return <Settings />;
+  return <Settings navigation={navigation} />;
 }
 
 SettingsScreen.navigationOptions = {
-  title: "app.json"
+  title: "Settings"
 };
