@@ -1,5 +1,5 @@
 import * as WebBrowser from "expo-web-browser";
-import React from "react";
+import React, { useState } from "react";
 import {
   Image,
   Platform,
@@ -7,12 +7,14 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
+  Button
 } from "react-native";
 
-import { MonoText } from "../components/StyledText";
-
-export default function HomeScreen() {
+const HomeScreen = () => {
+  const _checkUserIn = async () => {
+    //hello
+  };
   return (
     <View style={styles.container}>
       <ScrollView
@@ -29,11 +31,15 @@ export default function HomeScreen() {
             style={styles.welcomeImage}
           />
         </View>
+        <View>
+          <Text> {new Date().toDateString()} </Text>
+          <Button title='Check In' onPress={_checkUserIn} />
+        </View>
       </ScrollView>
     </View>
   );
-}
-
+};
+export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
