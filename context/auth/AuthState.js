@@ -28,13 +28,16 @@ const AuthState = props => {
 
   // Load User
   const loadUser = async () => {
-    if (AsyncStorage.token) {
-      setAuthToken(AsyncStorage.token);
+    const token = await AsyncStorage.getItem("token");
+    if (token) {
+      setAuthToken(token);
     }
 
     try {
       const res = await axios.get(
-        "https://employee-portal-lace-nails.herokuapp.com/api/auth"
+        __DEV__
+          ? "http:localhost:3001/api/auth"
+          : "https://employee-portal-lace-nails.herokuapp.com/api/auth"
       );
 
       dispatch({
@@ -56,11 +59,12 @@ const AuthState = props => {
 
     try {
       const res = await axios.post(
-        "https://employee-portal-lace-nails.herokuapp.com/db/register",
+        __DEV__
+          ? "http:localhost:3001/db/register"
+          : "https://employee-portal-lace-nails.herokuapp.com/db/register",
         formData,
         config
       );
-
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data
@@ -68,9 +72,10 @@ const AuthState = props => {
 
       loadUser();
     } catch (err) {
+      console.log(err.response.data);
       dispatch({
         type: REGISTER_FAIL,
-        payload: err.response.data.msg
+        payload: err.response.data
       });
     }
   };
@@ -85,7 +90,9 @@ const AuthState = props => {
 
     try {
       const res = await axios.post(
-        "https://employee-portal-lace-nails.herokuapp.com/api/login",
+        __DEV__
+          ? "http:localhost:3001/db/login"
+          : "https://employee-portal-lace-nails.herokuapp.com/db/login",
         formData,
         config
       );
@@ -99,7 +106,7 @@ const AuthState = props => {
     } catch (err) {
       dispatch({
         type: LOGIN_FAIL,
-        payload: err.response.data.msg
+        payload: err.response.data
       });
     }
   };

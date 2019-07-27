@@ -1,5 +1,5 @@
 import Constants from "expo-constants";
-import React from "react";
+import React, { useContext } from "react";
 import {
   SectionList,
   Image,
@@ -9,10 +9,12 @@ import {
   Button,
   Text
 } from "react-native";
-
+import AuthContext from "../../context/auth/AuthContext";
 const Settings = () => {
-  const _signOut = () => AsyncStorage.clear();
-
+  const authContext = useContext(AuthContext);
+  const signOutUser = async () => {
+    authContext.logout();
+  };
   const _renderSectionHeader = () => {
     return <View />;
   };
@@ -25,7 +27,7 @@ const Settings = () => {
     {
       data: [
         {
-          value: <Button title='Sign Out' onPress={_signOut} />
+          value: <Button title='Sign Out' onPress={() => signOutUser()} />
         }
       ]
     }

@@ -1,14 +1,14 @@
 import React, { useEffect, useContext } from "react";
 import { ActivityIndicator, StatusBar, StyleSheet, View } from "react-native";
 import AuthContext from "../../context/auth/AuthContext";
-export default function AuthLoadingScreen(props) {
+export default function AuthLoadingScreen({ navigation }) {
   const authContext = useContext(AuthContext);
   useEffect(() => {
     authContext.loadUser();
   }, []);
+  if (authContext.isAuthenticated) navigation.navigate("App");
 
-  props.navigation.navigate(authContext.isAuthenticated ? "App" : "Auth");
-
+  navigation.navigate("Auth");
   return (
     <View style={styles.container}>
       <ActivityIndicator />

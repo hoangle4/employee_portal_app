@@ -31,6 +31,7 @@ export default (state, action) => {
     case AUTH_ERROR:
     case LOGIN_FAIL:
     case LOGOUT:
+      console.log(action);
       AsyncStorage.removeItem("token");
       return {
         ...state,
