@@ -1,140 +1,136 @@
-import React, { useReducer } from "react";
-import axios from "axios";
-import AuthContext from "./AuthContext";
-import authReducer from "./AuthReducer";
-import setAuthToken from "../../utils/setAuthToken";
-import { AsyncStorage } from "react-native";
+import React, { useReducer } from 'react';
+import axios from 'axios';
+import AuthContext from './AuthContext';
+import authReducer from './AuthReducer';
+import setAuthToken from '../../utils/setAuthToken';
+import { AsyncStorage } from 'react-native';
 import {
-  REGISTER_SUCCESS,
-  REGISTER_FAIL,
-  USER_LOADED,
-  AUTH_ERROR,
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
-  LOGOUT,
-  CLEAR_ERRORS
-} from "../types";
+	REGISTER_SUCCESS,
+	REGISTER_FAIL,
+	USER_LOADED,
+	AUTH_ERROR,
+	LOGIN_SUCCESS,
+	LOGIN_FAIL,
+	LOGOUT,
+	CLEAR_ERRORS
+} from '../types';
 
-const AuthState = props => {
-  const initialState = {
-    token: AsyncStorage.getItem("token"),
-    isAuthenticated: null,
-    loading: true,
-    user: null,
-    error: null
-  };
+const AuthState = (props) => {
+	const initialState = {
+		token: AsyncStorage.getItem('token'),
+		isAuthenticated: null,
+		loading: true,
+		user: null,
+		error: null
+	};
 
-  const [state, dispatch] = useReducer(authReducer, initialState);
+	const [ state, dispatch ] = useReducer(authReducer, initialState);
 
-  // Load User
-  const loadUser = async () => {
-    const token = await AsyncStorage.getItem("token");
-    if (token) {
-      setAuthToken(token);
-    }
+	// Load User
+	const loadUser = async () => {
+		const token = await AsyncStorage.getItem('token');
+		if (token) {
+			setAuthToken(token);
+		}
 
-    try {
-      const res = await axios.get(
-        __DEV__
-          ? "http:localhost:3001/api/auth"
-          : "https://employee-portal-lace-nails.herokuapp.com/api/auth"
-      );
+		try {
+			const res = await axios.get(
+				__DEV__ ? 'http:localhost:3001/api/auth' : 'https://employee-portal-lace-nails.herokuapp.com/api/auth'
+			);
 
-      dispatch({
-        type: USER_LOADED,
-        payload: res.data
-      });
-    } catch (err) {
-      dispatch({ type: AUTH_ERROR });
-    }
-  };
+			dispatch({
+				type: USER_LOADED,
+				payload: res.data
+			});
+		} catch (err) {
+			dispatch({ type: AUTH_ERROR });
+		}
+	};
 
-  // Register User
-  const register = async formData => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
+	// Register User
+	const register = async (formData) => {
+		const config = {
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		};
 
-    try {
-      const res = await axios.post(
-        __DEV__
-          ? "http:localhost:3001/db/register"
-          : "https://employee-portal-lace-nails.herokuapp.com/db/register",
-        formData,
-        config
-      );
-      dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res.data
-      });
+		try {
+			const res = await axios.post(
+				__DEV__
+					? 'http:localhost:3001/db/register'
+					: 'https://employee-portal-lace-nails.herokuapp.com/db/register',
+				formData,
+				config
+			);
+			dispatch({
+				type: REGISTER_SUCCESS,
+				payload: res.data
+			});
 
-      loadUser();
-    } catch (err) {
-      console.log(err.response.data);
-      dispatch({
-        type: REGISTER_FAIL,
-        payload: err.response.data
-      });
-    }
-  };
+			loadUser();
+		} catch (err) {
+			console.log(err.response.data);
+			dispatch({
+				type: REGISTER_FAIL,
+				payload: err.response.data
+			});
+		}
+	};
 
-  // Login User
-  const login = async formData => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
+	// Login User
+	const login = async (formData) => {
+		const config = {
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		};
 
-    try {
-      const res = await axios.post(
-        __DEV__
-          ? "http:localhost:3001/db/login"
-          : "https://employee-portal-lace-nails.herokuapp.com/db/login",
-        formData,
-        config
-      );
+		try {
+			const res = await axios.post(
+				__DEV__ ? 'http:localhost:3001/db/login' : 'https://employee-portal-lace-nails.herokuapp.com/db/login',
+				formData,
+				config
+			);
 
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data
-      });
+			dispatch({
+				type: LOGIN_SUCCESS,
+				payload: res.data
+			});
 
-      loadUser();
-    } catch (err) {
-      dispatch({
-        type: LOGIN_FAIL,
-        payload: err.response.data
-      });
-    }
-  };
+			loadUser();
+		} catch (err) {
+			dispatch({
+				type: LOGIN_FAIL,
+				payload: err.response.data
+			});
+		}
+	};
 
-  // Logout
-  const logout = () => dispatch({ type: LOGOUT });
+	// Logout
+	const logout = () => dispatch({ type: LOGOUT });
 
-  // Clear Errors
-  const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
+	// Clear Errors
+	const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
-  return (
-    <AuthContext.Provider
-      value={{
-        token: state.token,
-        isAuthenticated: state.isAuthenticated,
-        loading: state.loading,
-        user: state.user,
-        error: state.error,
-        register,
-        loadUser,
-        login,
-        logout,
-        clearErrors
-      }}
-    >
-      {props.children}
-    </AuthContext.Provider>
-  );
+	return (
+		<AuthContext.Provider
+			value={{
+				token: state.token,
+				isAuthenticated: state.isAuthenticated,
+				loading: state.loading,
+				user: state.user,
+				error: state.error,
+				register,
+				loadUser,
+				login,
+				logout,
+				clearErrors
+			}}
+		>
+			{props.children}
+		</AuthContext.Provider>
+	);
 };
 
 export default AuthState;
