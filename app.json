@@ -2,7 +2,7 @@
   "expo": {
     "name": "Lace Nails Employee",
     "slug": "laceEmployee",
-    "privacy": "unlisted",
+    "privacy": "public",
     "sdkVersion": "33.0.0",
     "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
@@ -18,7 +18,12 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSAllowsLocalNetworking": true,
+        "NSIncludesSubdomains": true,
+        "NSExceptionAllowsInsecureHTTPLoads": true
+      }
     }
   }
 }

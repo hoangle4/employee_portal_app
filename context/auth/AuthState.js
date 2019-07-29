@@ -36,7 +36,7 @@ const AuthState = props => {
     try {
       const res = await axios.get(
         __DEV__
-          ? "http:localhost:3001/api/auth"
+          ? "http://192.168.1.126:3001/api/auth"
           : "https://employee-portal-lace-nails.herokuapp.com/api/auth"
       );
 
@@ -60,7 +60,7 @@ const AuthState = props => {
     try {
       const res = await axios.post(
         __DEV__
-          ? "http:localhost:3001/db/register"
+          ? "http://192.168.1.126:3001/db/register"
           : "https://employee-portal-lace-nails.herokuapp.com/db/register",
         formData,
         config
@@ -91,7 +91,7 @@ const AuthState = props => {
     try {
       const res = await axios.post(
         __DEV__
-          ? "http:localhost:3001/db/login"
+          ? "http://192.168.1.126:3001/db/login"
           : "https://employee-portal-lace-nails.herokuapp.com/db/login",
         formData,
         config
@@ -104,6 +104,7 @@ const AuthState = props => {
 
       loadUser();
     } catch (err) {
+      console.log(err.message);
       dispatch({
         type: LOGIN_FAIL,
         payload: err.response.data
